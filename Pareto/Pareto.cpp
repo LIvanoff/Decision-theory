@@ -1,11 +1,14 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
+#include <stack>
 using namespace std;
-static int dom = 0;
-int d, sm;
+//static int dom = 0;
+//int d, sm;
+int temp;
 vector<bool> variants = { false, false, false,false,false, false, false,false,false, false };
-vector<int> pareto;
+//vector<int> pareto;
+stack<int> stck;
 char aspiration(int x)
 {
 	if(x==0||x==1||x==3)
@@ -17,7 +20,7 @@ char aspiration(int x)
 		return '-';
 	}
 }
-
+/*
 int dominant()
 {
 	for(int i = 0;i<pareto.size()-2;i++)
@@ -38,7 +41,7 @@ int dominant()
 		else if (pareto.empty()) { continue; }
 	}
 	return 0;
-	/*
+	
 	if(dom%2==0)
 	{
 		return 0;
@@ -47,7 +50,24 @@ int dominant()
 	{
 		return 1;
 	}
-	*/
+	
+}*/
+int pareto()
+{
+	int a = stck.top();
+	//cout << "value in stack " << stck.top();
+	if(a == temp)
+	{
+		return 0;
+	}
+	else
+	{
+		for(int i = 0 ; i < stck.size(); i++)
+		{
+			stck.pop();
+		}
+		return 1;
+	}
 }
 int main()
 {
@@ -84,54 +104,62 @@ int main()
 					if (set[i][j] >= set[k + 1][j] )
 					{
 						//dom += 2;
-						pareto.push_back(0);
-						d += 1;
-						cout << set[i][j] << '>' << set[k + 1][j] << ' ';
+						//pareto.push_back(0);
+						stck.push(0);
+						//d += 1;
+						//cout << set[i][j] << '>' << set[k + 1][j] << ' ';
 					}
 					else if (set[i][j] < set[k + 1][j])
 					{
 						//dom += 1;
-						pareto.push_back(1);
-						sm += 1;
-						cout << set[i][j] << '<' << set[k + 1][j] << ' ';
+						//pareto.push_back(1);
+						stck.push(1);
+						//sm += 1;
+						//cout << set[i][j] << '<' << set[k + 1][j] << ' ';
 					}
 				}
 				else
 				{
-					if (set[i][j] < set[k + 1][j])
+					if (set[i][j] <= set[k + 1][j])
 					{
 						//dom += 2;
-						pareto.push_back(1);
-						d += 1;
-						cout << set[i][j] << '<' << set[k + 1][j] << ' ';
+						//pareto.push_back(1);
+						stck.push(0);
+						//d += 1;
+						//cout << set[i][j] << '<' << set[k + 1][j] << ' ';
 					}
-					else if (set[i][j] >= set[k + 1][j] )
+					else if (set[i][j] > set[k + 1][j] )
 					{
 						//dom += 1;
-						pareto.push_back(0);
-						sm += 1;
-						cout << set[i][j] << '>' << set[k + 1][j] << ' ';
+						//pareto.push_back(0);
+						stck.push(1);
+						//sm += 1;
+						//cout << set[i][j] << '>' << set[k + 1][j] << ' ';
 					}
 				}
+				if (j == 0) { temp = stck.top(); }
 				if(j>=1)
 				{
-					for (auto c : pareto) { cout << c; }
-					if(dominant()==1)
+					//for (auto c : pareto) { cout << c; }
+					//if(dominant()==1)
+					if(pareto()==1)
 					{
-						cout << "domin = "<<dominant();
-						dom = 0;
+						//cout << "domin = "<<dominant();
+						//dom = 0;
 						j = 4;
 					}
-					else if(dominant()==0 && j==4 && sm != d)
+					//else if(dominant()==0 && j==4 && sm != d)
+					else if (pareto() == 0 && j == 4 )
 					{
+						//cout << "pareto() = " <<pareto();
 						variants[i] = true;
-						cout << " (A" << i + 1 << ")";
-						pareto.clear();
+						//cout << " (A" << i + 1 << ")";
+						//pareto.clear();
 					}
 				}
-				cout << " (" << j << ") ";
+				//cout << " (" << j << ") ";
 			}
-			cout << " k = " << k << " i = " <<i<<"dom = " << dominant()<< endl;
+			//cout << " k = " << k << " i = " <<i << endl;
 		}
 	}
 	cout << " Множество парето-оптимальных альтернатив: ";
