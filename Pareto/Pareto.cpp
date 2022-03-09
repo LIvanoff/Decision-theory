@@ -5,6 +5,7 @@
 using namespace std;
 int temp;
 vector<bool> variants = { false, false, false,false,false, false, false,false,false, false };
+vector<bool> restriction = { false, false, false,false,false, false, false,false,false, false };
 stack<int> stck;
 char aspiration(int x)
 {
@@ -31,6 +32,16 @@ int pareto()
 			stck.pop();
 		}
 		return 1;
+	}
+}
+void var(vector<bool> &x)
+{
+	for (int i = 0; i < x.size(); i++)
+	{
+		if (x[i] == 1)
+		{
+			cout << 'A' << i + 1 << ' ';
+		}
 	}
 }
 int main()
@@ -101,9 +112,30 @@ int main()
 		}
 	}
 	cout << " Множество парето-оптимальных альтернатив: ";
-	for(int i = 0; i < variants.size(); i++ )
+	var(variants);
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	cout << "\n\n Сужение множества Парето - оптимальных исходов\n\n";
+
+	//границей кол-ва ассистов будет не менее 3 ассистов
+	//границей кол-ва голов будет не менее 8 голов
+	for (int i = 0 ; i < 9; i++ )
 	{
-		if(variants[i]==1)
+		for ( int j =0; j < 1; j++ )
+		{
+			if(set[i][0]>=3 && set[i][1] >= 8)
+			{
+				restriction[i] = true;
+			}
+		}
+	}
+	cout << " Варианты, удовлетворяющие этим ограничениям: ";
+	var(restriction);
+	cout << "\n Из них оптимальными по	Парето являются: ";
+	for( int i = 0; i < restriction.size(); i++)
+	{
+		if(restriction[i] == variants[i] && restriction[i] == 1 )
 		{
 			cout << 'A' << i + 1 << ' ';
 		}
@@ -111,6 +143,7 @@ int main()
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	cout << "\n Сужение множества Парето - оптимальных исходов ";
+	cout << "\n\n Субоптимизация на основе исходного множества альтернатив\n\n";
+
 	cout << endl;
 }
