@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <stack>
+#include <algorithm>
 using namespace std;
 int temp;
 vector<bool> variants = { false, false, false,false,false, false, false,false,false, false };
@@ -130,7 +131,7 @@ int main()
 			}
 		}
 	}
-	cout << " Варианты, удовлетворяющие этим ограничениям: ";
+	cout << " Варианты, удовлетворяющие ограничениям: ";
 	var(restriction);
 	cout << "\n Из них оптимальными по	Парето являются: ";
 	for( int i = 0; i < restriction.size(); i++)
@@ -140,10 +141,42 @@ int main()
 			cout << 'A' << i + 1 << ' ';
 		}
 	}
+	for( auto c : restriction) //сброс значений результатов сужения
+	{
+		c = false;
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	cout << "\n\n Субоптимизация на основе исходного множества альтернатив\n\n";
-
+	vector<int> suboptimization;
+	cout << " Варианты удовлетворяющие нашим ограничениям: ";
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 1; j++)
+		{
+			if (set[i][0] >= 3 && set[i][1] >= 7 && set[i][3] >= 30 && set[i][4] <21)
+			{
+				suboptimization.push_back(set[i][2]);
+				cout << 'A' << i + 1 << ' ';
+			}
+		}
+	}
+	vector<int>::const_iterator smallest = min_element(suboptimization.begin(), suboptimization.end());
+	for(int i =0; i < 9; i++)
+	{
+		for(int j = 2 ; j < 3; j++)
+		{
+			if(set[i][j]== *smallest)
+			{
+				cout << "\n Окончательным решением является: ";
+				cout << 'A' << i + 1 << ' ';
+			}
+		}
+	}
 	cout << endl;
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 }
