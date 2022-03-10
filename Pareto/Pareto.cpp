@@ -45,6 +45,18 @@ void var(vector<bool> &x)
 		}
 	}
 }
+int counter()
+{
+	int count = 0;
+	for (auto c : restriction)
+	{
+		if (c == true)
+		{
+			count++;
+		}
+	}
+	return count > 1 ? 2 : 0;
+}
 int main()
 {
 	setlocale(LC_ALL, "Russian");
@@ -121,7 +133,7 @@ int main()
 
 	//границей кол-ва ассистов будет не менее 3 ассистов
 	//границей кол-ва голов будет не менее 8 голов
-	for (int i = 0 ; i < 9; i++ )
+	for (int i = 0 ; i < 10; i++ )
 	{
 		for ( int j =0; j < 1; j++ )
 		{
@@ -171,6 +183,7 @@ int main()
 			{
 				cout << "\n Окончательным решением является: ";
 				cout << 'A' << i + 1 << ' ';
+				i = 8;
 			}
 		}
 	}
@@ -178,5 +191,69 @@ int main()
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+	cout << "\n\n Лексикографическая оптимизация на основе исходного множества альтернатив\n\n";
+	temp = set[0][1];
+	for (int j = 1; j < 2; j++)
+	{
+		for( int i = 0 ; i <9 ; i++)
+		{
+			if(set[i][j] < set[i+1][j] && set[i + 1][j] > temp)
+			{
+				temp = set[i + 1][j];
+				restriction[i + 1] = true;
+				int d = i;
+				for(i = 0; i <= d; i++)
+				{
+					restriction[i] = false;
+				}
+				i = d;
+			}
+			else if (set[i + 1][j] == temp) 
+			{
+				restriction[i + 1] = true;
+			}
+		}
+	}
+	if(counter() > 1)
+	{
+		for(int j = 0 ; j < 5; j++)
+		{
+			if(j==1)
+			{
+				j = 0;
+			}
+			for(int i = 0; i < 9; i++)
+			{
+				if(restriction[i]==true)
+				{
+					temp = set[i][j];
+					if (set[i][j] < set[i + 1][j] && set[i + 1][j] > temp)
+					{
+						temp = set[i + 1][j];
+						restriction[i + 1] = true;
+						int d = i;
+						for (i = 0; i <= d; i++)
+						{
+							restriction[i] = false;
+						}
+						i = d;
+					}
+					else if (set[i + 1][j] == temp)
+					{
+						restriction[i + 1] = true;
+					}
+				}
+			}
+			if(j==2)
+			{
+				j = 0;
+			}
+			if(j==0)
+			{
+				j = 2;
+			}
+		}
+	}
+	cout << " Оптимальным решением является: ";
+	var(restriction);
 }
