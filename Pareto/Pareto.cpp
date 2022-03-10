@@ -19,6 +19,17 @@ char aspiration(int x)
 		return '-';
 	}
 }
+char aspiration_lex(int x)
+{
+	if (x == 0 || x == 2 || x == 3)
+	{
+		return '+';
+	}
+	else
+	{
+		return '-';
+	}
+}
 int pareto()
 {
 	int a = stck.top();
@@ -129,7 +140,7 @@ int main()
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	cout << "\n\n Сужение множества Парето - оптимальных исходов\n\n";
+	cout << "\n\n Сужение множества Парето - оптимальных исходов\n Границы по критерию (1) - >=3 ассистов; (2) - >=8 голов\n";
 
 	//границей кол-ва ассистов будет не менее 3 ассистов
 	//границей кол-ва голов будет не менее 8 голов
@@ -227,20 +238,41 @@ int main()
 				if(restriction[i]==true)
 				{
 					temp = set[i][j];
-					if (set[i][j] < set[i + 1][j] && set[i + 1][j] > temp)
+					if(aspiration_lex(j) == '+')
 					{
-						temp = set[i + 1][j];
-						restriction[i + 1] = true;
-						int d = i;
-						for (i = 0; i <= d; i++)
+						if (set[i][j] < set[i + 1][j] && set[i + 1][j] > temp)
 						{
-							restriction[i] = false;
+							temp = set[i + 1][j];
+							restriction[i + 1] = true;
+							int d = i;
+							for (i = 0; i <= d; i++)
+							{
+								restriction[i] = false;
+							}
+							i = d;
 						}
-						i = d;
+						else if (set[i + 1][j] == temp)
+						{
+							restriction[i + 1] = true;
+						}
 					}
-					else if (set[i + 1][j] == temp)
+					else
 					{
-						restriction[i + 1] = true;
+						if (set[i][j] > set[i + 1][j] && set[i + 1][j] < temp)
+						{
+							temp = set[i + 1][j];
+							restriction[i + 1] = true;
+							int d = i;
+							for (i = 0; i <= d; i++)
+							{
+								restriction[i] = false;
+							}
+							i = d;
+						}
+						else if (set[i + 1][j] == temp)
+						{
+							restriction[i + 1] = true;
+						}
 					}
 				}
 			}
