@@ -1,6 +1,28 @@
 ﻿#include <iostream>
 
-using namespace std; 
+using namespace std;
+
+double n, p, d;
+
+int cost(int x)
+{
+	if(x==0)
+	{
+		return 5;
+	}
+	else if(x==1||x==2)
+	{
+		return 4;
+	}
+	else if(x==3)
+	{
+		return 3;
+	}
+	else
+	{
+		return 2;
+	}
+}
 
 int main()
 {
@@ -29,4 +51,58 @@ int main()
 	cout << "------------------\n";
 	cout << "asp| + + + + -\n";
 
+	for (int i = 0; i < 9; i++)
+	{
+		for (int k = i; k < 9; k++)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				if(j!=4)
+				{
+					if (set[i][j] > set[i + 1][j])
+					{
+						p += cost(j);
+					}
+					else if (set[i][j] < set[i + 1][j])
+					{
+						n += cost(j);
+					}
+				}
+				else
+				{
+					if (set[i][j] < set[i + 1][j])
+					{
+						p += cost(j);
+					}
+					else if (set[i][j] > set[i + 1][j])
+					{
+						n += cost(j);
+					}
+				}
+			}
+			if(p>n && n!=0)
+			{
+				d = p / n;
+			}
+			else if(n>p && p!=0)
+			{
+				d = n / p;
+			}
+			else if(p == n)
+			{
+			
+			}
+			else if(p==0 || n==0)
+			{
+				if(p==0)
+				{
+						
+				}
+				else
+				{
+
+				}
+			}
+		}
+	}
 }
