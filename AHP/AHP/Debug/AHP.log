@@ -1,5 +1,1 @@
-﻿  AHP.cpp
-c:\users\drfri\onedrive\рабочий стол\учёба\курс 2\тпр\пр3\ahp\ahp\ahp.cpp(123): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\drfri\onedrive\рабочий стол\учёба\курс 2\тпр\пр3\ahp\ahp\ahp.cpp(127): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\drfri\onedrive\рабочий стол\учёба\курс 2\тпр\пр3\ahp\ahp\ahp.cpp(189): warning C4018: <: несоответствие типов со знаком и без знака
-  AHP.vcxproj -> C:\Users\drfri\OneDrive\Рабочий стол\Учёба\Курс 2\ТПР\Пр3\AHP\Debug\AHP.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.WindowsSDK.targets(46,5): error MSB8036: не удалось найти Windows SDK версии 10.0.19041.0. Установите нужную версию Windows SDK или измените версию SDK на страницах свойств проекта либо щелкнув правой кнопкой мыши решение и выбрав "Изменить целевую платформу решения".
