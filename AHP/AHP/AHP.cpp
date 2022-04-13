@@ -28,12 +28,12 @@ static vector<double> q3;
 static vector<double> q4;
 static vector<double> q5;
 static vector<double> ahp;
-
-static double k0[5][5] = {{1,0.25,0.2,0.2,0.167}, // матрица целей
+/*
+static double k0[5][5] = {{1,0.25,0.2,0.2,0.167}, 
 						{4,1,0.33,0.25,0.142},
 						{5,3,1,0.2,0.167}, 
 						{5,4,5,1,0.33}, 
-						{6,7,6,3,1}};
+						{6,7,6,3,1}};*/
 static double k1[5][5] = {{1,0.2,0.167,1,0.33},
 						{5,1,1,5,3},
 						{6,1,1,7,5},
@@ -59,7 +59,7 @@ static double k5[5][5] = {{1,5,4,6,6},
 						{0.25,2,1,4,4},
 						{0.142,0.33,0.25,1,1},
 						{0.142,0.33,0.25,1,1}};
-static double goal[5][5] = { {1,3,4,5,6},
+static double goal[5][5] = { {1,3,4,5,6}, // матрица целей
 						{0.33,1,2,3,4},
 						{0.25,0.5,1,2,3},
 						{0.2,0.33,0.5,1,2},
@@ -205,18 +205,6 @@ static int calc_crit(double array[][5])
 		q4.push_back(Wk[i + 3]);
 		q5.push_back(Wk[i + 4]);
 	}
-	/*
-	for(int i = 0; i < 5; i++)
-	{
-		q.push_back(W[i] * Wk[i]);
-	}
-	double sum_q = 0;
-	for(auto c : q)
-	{
-		sum_q += c;
-	}
-	ahp.push_back(sum_q);
-	*/
 	clear();
 	return 0;
 }
